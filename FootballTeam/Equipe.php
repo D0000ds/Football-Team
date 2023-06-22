@@ -12,6 +12,7 @@ Class Equipe
         $this->nom = $nom;
         $this->date_creation = new DateTime($date_creation);
         $this->pays = $pays;
+        $pays->ajouterUneEquipe($this);
     }
 
     public function getPays()
@@ -56,7 +57,7 @@ Class Equipe
 
     public function infosEquipe()
     {
-        echo $this->getNom()." ".$this->getDateCreation()." ".$this->getPays()."<br>";
+        echo "Le ".$this->getNom()." creer en ".$this->getDateCreation()." est un club originaire de ".$this->getPays()."<br>";
     }
 
     public function __toString()

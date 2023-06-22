@@ -8,17 +8,19 @@ Class Joueur
     private Pays $pays;
     private array $equipes;
 
+
     public function __construct($nom, $prenom, $date_naissance, $pays)
     {
         $this->nom = $nom;
         $this->prenom = $prenom;
         $this->date_naissance = new DateTime($date_naissance);
         $this->pays = $pays;
+        $pays->ajouterUnJoueur($this);
     }
 
     public function getNom()
     {
-        return $this->nom."<br>";
+        return $this->nom;
     }
     public function setNom(string $nom)
     {
@@ -27,7 +29,7 @@ Class Joueur
 
     public function getPrenom()
     {
-        return $this->prenom."<br>";
+        return $this->prenom;
     }
     public function setPrenom(string $prenom)
     {
@@ -52,6 +54,16 @@ Class Joueur
         $this->date_naissance = new DateTime($date_naissance);
     }
 
+    public function getAge()
+    {
+        $now = date('Y-m-d');
+        $now2 = new DateTime($now);
+        $diff = $now2->diff($this->date_naissance);
+        $age = $diff->y;
+
+        return $age;
+    }
+
     public function ajouterUneEquipe(Transfere $equipes)
     {
         $this->equipes[] = $equipes;
@@ -59,14 +71,18 @@ Class Joueur
 
     public function listeEquipes()
     {
+        $total = 0;
         foreach($this->equipes as $equipesListe)
         {
-            echo $equipesListe->getEquipe()." (".$equipesListe->getDateSignature().")<br>";
+            echo "Il a joué au ".$equipesListe->getEquipe()." en ".$equipesListe->getDateSignature()." pour ".$equipesListe->getMontant()." €<br>";
+            $total = $total +$equipesListe->getMontant();
+            
         }
+        echo "Total : ".$total." € <br>";
     }
 
     public function __toString()
     {
-        return "$this->nom $this->prenom $this->pays";
+        return "$this->nom $this->prenom $this->pays ".$this->getAge()." ans";
     }
 }

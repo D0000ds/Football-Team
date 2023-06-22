@@ -7,6 +7,10 @@ Class Transfere
     private Joueur $joueur;
     private Equipe $equipe;
     private array $joueurs;
+    private float $montantTotal;
+
+
+
 
     public function __construct($montant, $date_signature, $joueur, $equipe)
     {
@@ -14,10 +18,12 @@ Class Transfere
         $this->date_signature = new DateTime($date_signature);
         $this->joueur = $joueur;
         $this->equipe = $equipe;
+        $this->montantTotal = 0;
         $equipe->ajouterUnJoueur($this);
         $joueur->ajouterUneEquipe($this);
 
         $this->joueurs[] = $joueur;
+
     }
 
     public function getMontant()
@@ -48,17 +54,19 @@ Class Transfere
  
     }
 
+    // public function getTotal()
+    // {
+    //     foreach ($this->joueurs as $j)
+    //     {
+    //         var_dump($j->getJoueur()->getMontant());
+    //     }
+    //     $this->montantTotal =  $this->montantTotal + $this->montant;
+    //     return  $this->montantTotal;
+    // }
+
     public function getEquipe()
     {
         return $this->equipe;
-    }
-
-    public function listeTransfere()
-    {
-        foreach($this->joueurs as $transfereListe)
-        {
-            echo $transfereListe." ". $this->getMontant()." (".$this->getDateSignature().")<br>";
-        }
     }
 
     public function __toString()
